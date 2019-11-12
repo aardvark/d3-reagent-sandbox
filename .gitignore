@@ -1,0 +1,13 @@
+target/*
+.nrepl-port
+.lein-env
+.shadow-cljs
+
+figwheel_server.log
+
+*~
+\#*
+
+node_modules/*
+system.properties
+resources/public/js/*
