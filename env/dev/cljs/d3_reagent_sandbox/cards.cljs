@@ -16,8 +16,8 @@
 (defcard-rg d3-card
   [core/d3-page])
 
-(defcard-rg d3-2
-  [core/d3-page2])
+(defcard-rg d3-circles
+  [core/d3-example-page "D3 svg circles" core/svg-circles])
 
 ;(defcard-rg home-page-card
 ;  [core/home-page])

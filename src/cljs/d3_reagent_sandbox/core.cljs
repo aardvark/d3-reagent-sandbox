@@ -8,7 +8,8 @@
    ["d3" :as d3]
    ["react-faux-dom" :as faux-dom]
    ["react" :as react]
-   ["create-react-class" :as create-class])) 
+   ["create-react-class" :as create-class]
+   [d3-reagent-sandbox.d3.utils :as d3.utils])) 
 
 ;; -------------------------
 ;; Routes
@@ -64,51 +65,6 @@
   (fn [] [:span.main
           [:h1 "About d3-reagent-sandbox"]]))
 
-;; d3 faux dom utils
-(defn- duration [^js props] (.-animateDuration props))
-(defn- mutations [^js props] (.-d3fn props))
-(defn- containerCallback [^js props] (.-containerCallback props))
-(defn- chart [^js props] (.-chart props))
-
-(def Container
-  (create-class
-   #js {:componentDidMount (fn []
-                             (this-as this
-                               (let [connect            (.-connectFauxDOM (.-props this))
-                                     animate            (.-animateFauxDOM (.-props this))
-                                     animation-duration (duration (.-props this))
-                                     callback           (containerCallback (.-props this))
-                                     d3-mutations       (mutations (.-props this))]
-
-                                        ; callback to parent component to provide access for updates
-                                 (when callback (callback this))
-
-                                        ; create the faux div and store in the "chart" prop
-                                 (let [faux (connect "div" "chart")]
-
-                                        ; mutations might be delayed so being defensive
-                                   (when d3-mutations (d3-mutations faux)))
-
-                                        ; initial animate if required
-                                 (when animation-duration (animate animation-duration))
-
-                                 nil)))
-        :render (fn []
-                  (this-as this
-                    (if-let [c (chart (.-props this))]
-                      c                         ; return the faux node when present
-                                        ; otherwise create a div so that something is always returned by render
-                      (.createElement react "div" #js {:className "placeholder"}))))}))
-
-
-(defn container
-  "create a plain component using a faux dom and a fn to mutate that dom.
-   the props must contain a :d3fn arity-1 fn that performs the d3 mutation"
-  [props]
-  (.createElement react (faux-dom/withFauxDOM Container) (clj->js props)))
-;; d3 faux dom utils end
-
-
 (defn append-svg []
   (fn [chart-div]
     (-> d3
@@ -118,34 +74,52 @@
       (.attr "width" 540))
     nil))
 
-(defn d3-paragraphs []
-  (fn [chart-div]
+(defn d3-paragraphs
+  ([dataset]
+   (fn [chart-div]
     (-> d3
         (.select chart-div)
         (.selectAll "p")
-        (.data (into-array [5 10 15 20 25]))
+        (.data (into-array dataset))
         (.enter)
         (.append "p")
         (.text (fn [x] x)))
     nil))
+  ([]
+   (d3-paragraphs [5 10 15 20 25])))
 
 (defn d3-page []
   (fn [] [:span.main
           [:h1 "D3"]
-          [:div {} (container {:d3fn (d3-paragraphs)})]]))
+          [:div {} (d3.utils/container {:d3fn (d3-paragraphs)})]]))
 
-(defn d3el
-  [d3f]
-  [:div {} (container {:d3fn (d3f)})])
 
-(defn d3-page2
-  []
+
+(defn svg-circles []
+  (fn [chart-div]
+    (let [svg     (-> d3
+                      (.select chart-div)
+                      (.append "svg")
+                      (.attr "height" 50)
+                      (.attr "width" 540))
+          circles (-> svg
+                      (.selectAll "circle")
+                      (.data (into-array [5 10 15 20 25]))
+                      (.enter)
+                      (.append "circle"))
+          circles (-> circles
+                      (.attr "cx" (fn [d i]
+                                    (+ 25 (* i 50 ))))
+                      (.attr "cy" 25)
+                      (.attr "r" (fn [x] x )))
+          ])
+    nil))
+
+(defn d3-example-page [title d3fn]
   (fn []
     [:span.main
-     [:h1 "D3-2"]
-     (d3el d3-paragraphs)]))  
-
-
+     [:h1 title]
+     (d3.utils/d3el d3fn)]))
 ;; -------------------------
 ;; Translate routes -> page components
 
