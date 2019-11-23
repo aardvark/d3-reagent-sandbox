@@ -4,6 +4,7 @@
    [cljsjs.react.dom]
    [reagent.core :as reagent :refer [atom]]
    [d3-reagent-sandbox.core :as core]
+   [d3-reagent-sandbox.d3.examples :as d3.examples]
    [devcards.core :as dc])
   (:require-macros
    [devcards.core
@@ -16,9 +17,13 @@
 (defcard-rg d3-card
   [core/d3-page])
 
-(defcard-rg d3-circles
-  [core/d3-example-page "D3 svg circles" core/svg-circles])
+(defcard-rg example-page-card
+  [d3.examples/example-page "Figure 6-11. Row of data circles"
+                            d3.examples/svg-circles-6-11])
 
+(defcard-rg circles-compose
+  [d3.examples/example-page "Figure 6-12. Colorfull data circles"
+                            d3.examples/svg-circles-6-12])
 ;(defcard-rg home-page-card
 ;  [core/home-page])
 

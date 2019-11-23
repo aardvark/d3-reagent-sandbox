@@ -94,32 +94,6 @@
           [:div {} (d3.utils/container {:d3fn (d3-paragraphs)})]]))
 
 
-
-(defn svg-circles []
-  (fn [chart-div]
-    (let [svg     (-> d3
-                      (.select chart-div)
-                      (.append "svg")
-                      (.attr "height" 50)
-                      (.attr "width" 540))
-          circles (-> svg
-                      (.selectAll "circle")
-                      (.data (into-array [5 10 15 20 25]))
-                      (.enter)
-                      (.append "circle"))
-          circles (-> circles
-                      (.attr "cx" (fn [d i]
-                                    (+ 25 (* i 50 ))))
-                      (.attr "cy" 25)
-                      (.attr "r" (fn [x] x )))
-          ])
-    nil))
-
-(defn d3-example-page [title d3fn]
-  (fn []
-    [:span.main
-     [:h1 title]
-     (d3.utils/d3el d3fn)]))
 ;; -------------------------
 ;; Translate routes -> page components
 
