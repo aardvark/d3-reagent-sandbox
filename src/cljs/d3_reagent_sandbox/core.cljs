@@ -132,8 +132,19 @@
 (defn d3-page []
   (fn [] [:span.main
           [:h1 "D3"]
-          [:div#graph]
           [:div {} (container {:d3fn (d3-paragraphs)})]]))
+
+(defn d3el
+  [d3f]
+  [:div {} (container {:d3fn (d3f)})])
+
+(defn d3-page2
+  []
+  (fn []
+    [:span.main
+     [:h1 "D3-2"]
+     (d3el d3-paragraphs)]))  
+
 
 ;; -------------------------
 ;; Translate routes -> page components

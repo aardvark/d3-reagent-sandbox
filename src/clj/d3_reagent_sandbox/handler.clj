@@ -29,6 +29,21 @@
     [:script "d3_reagent_sandbox.core.init_BANG_()"]]))
 
 
+(defn cards-page []
+  (html5
+    (head)
+    [:body
+     mount-target
+     (include-js "/js/cards.js")]))
+
+
+(defn cards-handler
+  [_]
+  {:status 200
+   :headers {"Content-Type" "text/html"}
+   :body (cards-page)})
+
+
 (defn index-handler
   [_request]
   {:status 200
@@ -48,6 +63,7 @@
    (reitit-ring/router
     [["/"      {:get {:handler index-handler}}]
      ["/about" {:get {:handler index-handler}}]
+     ["/cards" {:get {:handler cards-handler}}]
      ["/d3"    {:get {:handler d3-handler}}]
      ["/items"
       ["" {:get {:handler index-handler}}]

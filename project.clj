@@ -16,8 +16,7 @@
                  [ring/ring-defaults "0.3.2"]
                  [hiccup "1.0.5"]
                  [yogthos/config "1.1.3"]
-                 [org.clojure/clojurescript "1.10.520"
-                  :scope "provided"]
+                 [org.clojure/clojurescript "1.10.520" :scope "provided"]
                  [com.google.javascript/closure-compiler-unshaded "v20190325"]
                  [org.clojure/google-closure-library "0.0-20190213-2033d5d9"]
                  [metosin/reitit "0.3.7"]
@@ -69,17 +68,17 @@
               :source-map    true
               :optimizations :none
               :pretty-print  true}}
-            :devcards
+            :cards
             {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs"]
-             :figwheel {:devcards true}
-             :compiler {:main "d3-reagent-sandbox.cards"
-                        :asset-path "js/devcards_out"
-                        :output-to "target/cljsbuild/public/js/app_devcards.js"
-                        :output-dir "target/cljsbuild/public/js/devcards_out"
-                        :source-map-timestamp true
-                        :optimizations :none
-                        :pretty-print true}}}}
-            
+             :figwheel     {:devcards true}
+             :compiler     {:main                 "d3-reagent-sandbox.cards"
+                            :asset-path           "js/devcards_out"
+                            :output-to            "target/cljsbuild/public/js/app_devcards.js"
+                            :output-dir           "target/cljsbuild/public/js/devcards_out"
+                            :source-map-timestamp true
+                            :optimizations        :none
+                            :pretty-print         true}}}}
+
 
   :figwheel
   {:http-server-root "public"
@@ -98,11 +97,14 @@
                                   [figwheel-sidecar "0.5.18"]
                                   [nrepl "0.6.0"]
                                   [thheller/shadow-cljs "2.8.37"]
-                                  [devcards "0.2.6" :exclusions [cljsjs/react
-                                                                 cljsjs/react-dom]]
+                                  [devcards "0.2.6" :exclusions [cljsjs/create-react-class
+                                                                 cljsjs/react-dom-server
+                                                                 cljsjs/react-dom
+                                                                 cljsjs/react
+                                                                 org.clojure/clojurescript]]
                                   [pjstadig/humane-test-output "0.9.0"]]
 
-                   :source-paths ["env/dev/clj"]
+                   :source-paths ["env/dev/clj" "env/dev/cljs"]
                    :plugins      [[lein-figwheel "0.5.18"]]
 
                    :injections [(require 'pjstadig.humane-test-output)

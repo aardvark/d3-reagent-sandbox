@@ -1,20 +1,16 @@
-{:lein         true
- :source-paths ["src"]
+{:lein         {:profile "+dev"}
+ :source-paths ["src" "env"]
  :builds       {:app   {:target     :browser
                         :output-dir "resources/public/js"
                         :asset-path "/js"
                         :modules    {:app {:entries [d3-reagent-sandbox.core]}}
                         :devtools   {:after-load d3-reagent-sandbox.core/mount-root}}
-                :cards {:target     :browser
-                        :output-dir "resources/public/js/cards" ; where does compilation output go
-                        :asset-path "/js/cards"                 ; sets path to compiled assets in loader script
-                        :modules    {:main {:entries [d3-reagent-sandbox.devcards]}}
-                                        ; :devcards true is supposed to add preloads and calls start-devcard-ui! but not so for now
-                        :dev        {:compiler-options {:devcards true}}
-                        :devtools   {:http-root "resources/public"
-                                     :http-port 3000
-                                     :autoload  true ; defaults true for :browser target
-                                     :preloads  [devcards.core]}}}
+                :cards {:target           :browser
+                        :output-dir       "resources/public/js"
+                        :asset-path       "/js"
+                        :modules          {:cards {:entries [d3-reagent-sandbox.cards]}}
+                        :compiler-options {:devcards true}
+                        :devtools   {:after-load d3-reagent-sandbox.core/mount-root}}}
  
  :dev-http {3000 {:root    "resources/public"
                   :handler d3-reagent-sandbox.handler/app}}}
