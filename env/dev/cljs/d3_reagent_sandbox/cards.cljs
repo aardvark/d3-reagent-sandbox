@@ -23,7 +23,20 @@
 
 (defcard-rg circles-compose
   [d3.examples/example-page "Figure 6-12. Colorfull data circles"
-                            d3.examples/svg-circles-6-12])
+   d3.examples/svg-circles-6-12])
+
+(defcard-rg simple-bars
+  [d3.examples/example-page  "Figure 6-14. One lonely bar"
+   d3.examples/svg-bars-6-14])
+
+(defcard-rg by-function-x-bars
+  [d3.examples/example-page  "Figure 6-15. Twenty bars"
+   d3.examples/svg-bars-6-15])
+
+(defcard-rg by-function-x-bars
+  [d3.examples/example-page  "Figure 6-19. Twenty evenly spaced bars with dynamic widths"
+   d3.examples/svg-bars-6-19])
+
 ;(defcard-rg home-page-card
 ;  [core/home-page])
 
