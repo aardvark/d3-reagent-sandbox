@@ -54,3 +54,12 @@
    Accepts d3-function for DOM mutation"
   [d3f]
   [:div {} (container {:d3fn (d3f)})])
+
+(defn svg-div
+  [div h w]
+  (-> d3 
+      (.select div)
+      (.append "svg")
+      (.attr "height" h)
+      (.attr "width" w)))
+

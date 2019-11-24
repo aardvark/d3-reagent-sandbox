@@ -37,6 +37,10 @@
   [d3.examples/example-page  "Figure 6-19. Twenty evenly spaced bars with dynamic widths"
    d3.examples/svg-bars-6-19])
 
+(defcard-rg dynamic-bars
+  [d3.examples/example-page  "Figure 6-25. Growing bigger from above"
+   d3.examples/svg-bars-6-25])
+
 ;(defcard-rg home-page-card
 ;  [core/home-page])
 

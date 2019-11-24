@@ -104,11 +104,7 @@
         dataset data
         dataset (into-array dataset)
         rect-width (/ width (count data))
-        svg     (-> d3
-                    (.select chart-div)
-                    (.append "svg")
-                    (.attr "height" height)
-                    (.attr "width" width))
+        svg     (d3.utils/svg-div chart-div height width)
         rect    (-> svg
                     (.selectAll "rect")
                     (.data dataset)
@@ -127,5 +123,28 @@
           5)
     nil))
   
-
+(defn height-bars
+  [chart-div data bar-padding scale]
+  (let [height  100
+        width   500
+        dataset data
+        dataset (into-array dataset)
+        rect-width (/ width (count data))
+        svg     (d3.utils/svg-div chart-div height width)
+        rect    (-> svg
+                    (.selectAll "rect")
+                    (.data dataset)
+                    (.enter)
+                    (.append "rect")
+                    (.attr "x" (fn [_ i] (* i rect-width)))
+                    (.attr "y" (fn [d] (- height (* scale d))))
+                    (.attr "width" (- rect-width bar-padding))
+                    (.attr "height" (fn [d] (* scale d))))]))
   
+(defn svg-bars-6-25
+  []
+  (fn [chart-div]
+    (height-bars chart-div
+          [5 10 13 19 21 25 22 18 15 13 11 12 15 20 18 17 16 18 23 25]
+          1 4)
+    nil))
